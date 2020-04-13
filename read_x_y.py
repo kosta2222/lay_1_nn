@@ -1,3 +1,4 @@
+import numpy as np
 def make_train_matr(p_:str):
     matr=np.zeros(shape=(4, 10000))
     data=None
