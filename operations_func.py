@@ -54,3 +54,67 @@ def operations( op,  a,  b,  c,  d,  str):
 
     elif op == DEBUG_STR:
         print("%s\n"%str)
+
+# операции для функций активаций и их производных - для numpy массивов
+def operations(op, a, b, c, d, str= ""):
+    a=a.T
+    a=a[0]
+    """
+    В основном для функций активаций
+    :param op: 'байт-комманда'
+    :param a: <>
+    :param b: <>
+    :param c: <>
+    :param d: <>
+    :param str: <>-ее параметры
+    :return:
+    """
+    l=[]
+    if op==RELU:
+        for i in a:
+            if (i < 0):
+                l.append(0)
+            else:
+                l.append(i)
+        return np.array([l]).T
+    elif op==RELU_DERIV:
+        for i in a:
+            if (i < 0):
+                l.append(0)
+            else:
+                l.append(1)
+        return np.array([l])
+    elif op==TRESHOLD_FUNC:
+        for i in a:
+            if (i < 0):
+                l.append(0)
+            else:
+                l.append(1)
+        return np.array([l]).T
+    elif op==TRESHOLD_FUNC_DERIV:
+        pass # Нет производной
+    elif op==LEAKY_RELU:
+        for i in a:
+            if (i < 0):
+                l.append(b * a)
+            else:
+                l.append(i)
+        return np.array([l]).T
+    elif op==LEAKY_RELU_DERIV:
+        for i in a:
+            if (i < 0):
+                l.append(b)
+            else:
+                l.append(1)
+        return np.array([l]).T
+    elif op==SIGMOID:
+        return (1.0 / (1 + np.exp(b * (-a)))).T
+    elif op==SIGMOID_DERIV:
+        return (b * 1.0 / (1 + np.exp(b * (-a))) * (1 - 1.0 / (1 + np.exp(b * (-a))))).T
+    elif op==DEBUG:
+        print("%s : %f"% str, a)
+    elif op==DEBUG_STR:
+        print("%s"% str)
+    elif op == INIT_W_HE:
+        return np.random.randn() * math.sqrt(2 / b)
+
