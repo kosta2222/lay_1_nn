@@ -1,5 +1,5 @@
 from nn_constants import RELU_DERIV, RELU, TRESHOLD_FUNC, TRESHOLD_FUNC_DERIV, LEAKY_RELU, LEAKY_RELU_DERIV,\
-SIGMOID, SIGMOID_DERIV, DEBUG, DEBUG_STR, INIT_W_HE, INIT_W_GLOROT
+SIGMOID, SIGMOID_DERIV, DEBUG, DEBUG_STR, INIT_W_HE, INIT_W_GLOROT, INIT_W_HABR, INIT_W_MY
 import numpy as np
 import math
 np.random.seed(42)
@@ -38,14 +38,19 @@ def operations( op,  a,  b,  c,  d,  str):
     elif op == SIGMOID:
         return 2.0 / (1 + math.exp(b * (-a)))
     elif op == SIGMOID_DERIV:
-        return b * 2.0 / (1 + math.exp(b * (-a)))*(1 - 1.0 / (1 + math.exp(b * (-a))))
+        return b * 2.0 / (1 + math.exp(b * (-a)))*(1 - 2.0 / (1 + math.exp(b * (-a))))
     elif op == DEBUG:
         print("%s : %f\n"%( str, a))
+    elif op == INIT_W_HABR:
+        return 2 * np.random.random() - 1
     elif op == INIT_W_HE:
-        # if ready:
-        #     ready = False
-        #     return -0.001
-        ready = True
         return np.random.randn() * math.sqrt(2 / a)
+    elif op == INIT_W_MY:
+        if ready:
+            ready = False
+            return -0.01
+        ready = True
+        return 0.01
+
     elif op == DEBUG_STR:
         print("%s\n"%str)
