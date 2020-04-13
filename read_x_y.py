@@ -1,5 +1,8 @@
 from nn_constants import elems_of_img, max_trainSet_rows
-def make_train_matr(p_:str):
+import numpy as np
+import os
+from PIL import Image
+def make_train_matr(p_:str)->np.ndarray:
     matr=np.zeros(shape=(max_trainSet_rows, elems_of_img))
     data=None
     img=None

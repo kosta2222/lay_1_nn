@@ -10,14 +10,17 @@ def init_wei(w,h)->np.ndarray:
             matr[row][elem] = operations(INIT_W_MY, 0, 0, 0, 0, "");
     return matr
 def main():
+    wei:np.ndarray=None
+    n1:np.ndarray=None
+    data:np.ndarray=None
     wei = init_wei(elems_of_img, max_trainSet_rows)
-    data=[[0,0],[1,0],[0,1],[1,1]]
+    # data=[[0,0],[1,0],[0,1],[1,1]]
     # answer=[0, 1, 1, 1]  #  OR
     answer=[0, 0, 0, 1]  # AND
     n1=[0]*2
     n2=0
     w2=[0]*3
-    n2_dot=0
+    n2_dot:np.ndarray=None
     count=0
     A=0.01
     E=0
@@ -45,21 +48,23 @@ def main():
     accuracy_shureness = 75
     with_adap_lr = True
 
-    w2[0] = operations(INIT_W_HE, 2, 0, 0, 0, ""); # биас
-    w2[1] = operations(INIT_W_HE, 2, 0, 0, 0, "");
-    w2[2] = operations(INIT_W_MY, 2, 0, 0, 0, "");
+    # w2[0] = operations(INIT_W_HE, 2, 0, 0, 0, ""); # биас
+    # w2[1] = operations(INIT_W_HE, 2, 0, 0, 0, "");
+    # w2[2] = operations(INIT_W_MY, 2, 0, 0, 0, "");
 
     while (1) :
         print("epocha %d\n" % count);
         while (choose <= 3):
             print("chose %d \n" % choose)
-            n1[0] = data[choose][0]; # поставляю входные данные в
-            n1[1] = data[choose][1]; # нейронах 1 слоя
+            data=make_train_matr("b:/out")
+            n1 = np.array([[choose]]) # поставляю входные данные в
             """
             Умножаю значения нейронов 1 слоя с соответствующими весами и
             пропускаю через функцию активации которая является сигмоидом 
             """
-            n2_dot = w2[0] + n1[0] * w2[1] + n1[1] * w2[2]
+            # n2_dot = w2[0] + n1[0] * w2[1] + n1[1] * w2[2]
+            n2_dot=np.dot(wei, n1.T)
+
             n2 = operations(SIGMOID, n2_dot, sigmoid_koef, 0, 0, "")
             # Получаю ошибку выходного нейрона
             Z = n2 - answer[choose]
