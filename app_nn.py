@@ -13,12 +13,15 @@ def main():
     wei:np.ndarray=None
     n1:np.ndarray=None
     data:np.ndarray=None
+    answer:np.ndarray=None
+    answer=np.array([[1, 1, 1, 1]])
     wei = init_wei(elems_of_img, max_trainSet_rows)
     # data=[[0,0],[1,0],[0,1],[1,1]]
     # answer=[0, 1, 1, 1]  #  OR
     answer=[0, 0, 0, 1]  # AND
-    n1=[0]*2
-    n2=0
+    # n1=[0]*2
+    # n2=0
+    n2:np.ndarray=None
     w2=[0]*3
     n2_dot:np.ndarray=None
     count=0
@@ -67,12 +70,12 @@ def main():
 
             n2 = operations(SIGMOID, n2_dot, sigmoid_koef, 0, 0, "")
             # Получаю ошибку выходного нейрона
-            Z = n2 - answer[choose]
-            E = (answer[choose] - n2) * operations(SIGMOID_DERIV, n2_dot, sigmoid_koef, 0, 0, "");
+            Z = n2 - answer[choose].T
+            E = (answer[choose].T - n2) * operations(SIGMOID_DERIV, n2_dot, sigmoid_koef, 0, 0, "");
             if count == 0:
                 Z_t_minus_1 = Z
                 A_t_minus_1 = A
-            mse = pow(answer[choose] - n2, 2);
+            mse = pow(answer[choose].T - n2, 2);
             print("mse in train: %f \n" % mse);
             # if (mse < 0.0001):
             #     print("op")

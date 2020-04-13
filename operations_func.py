@@ -56,7 +56,7 @@ def operations( op,  a,  b,  c,  d,  str):
         print("%s\n"%str)
 
 # операции для функций активаций и их производных - для numpy массивов
-def operations(op, a, b, c, d, str= ""):
+def operations1(op, a, b, c, d, str= ""):
     a=a.T
     a=a[0]
     """
@@ -108,13 +108,25 @@ def operations(op, a, b, c, d, str= ""):
                 l.append(1)
         return np.array([l]).T
     elif op==SIGMOID:
-        return (1.0 / (1 + np.exp(b * (-a)))).T
+        for i in a:
+            s = 1.0 / (1 + np.exp(b * (- i)))
+            l.append(s)
+        return np.array([l]).T
     elif op==SIGMOID_DERIV:
-        return (b * 1.0 / (1 + np.exp(b * (-a))) * (1 - 1.0 / (1 + np.exp(b * (-a))))).T
+        for i in a:
+            s = (b * 1.0 / (1 + np.exp(b * (- i))) * (1 - 1.0 / (1 + np.exp(b * (- i)))))
+            l.append(s)
+        return np.array([l]).T
     elif op==DEBUG:
         print("%s : %f"% str, a)
     elif op==DEBUG_STR:
         print("%s"% str)
     elif op == INIT_W_HE:
         return np.random.randn() * math.sqrt(2 / b)
+    elif op == INIT_W_MY:
+        if ready:
+            ready = False
+            return -0.01
+        ready = True
+        return 0.01
 
