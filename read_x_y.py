@@ -1,6 +1,6 @@
-import numpy as np
+from nn_constants import elems_of_img, max_trainSet_rows
 def make_train_matr(p_:str):
-    matr=np.zeros(shape=(4, 10000))
+    matr=np.zeros(shape=(max_trainSet_rows, elems_of_img))
     data=None
     img=None
     for i in os.listdir(p_):
@@ -8,7 +8,7 @@ def make_train_matr(p_:str):
         img=Image.open(ful_p)
         print("img", ful_p)
         data=list(img.getdata())
-        for row in range(4):
-            for elem in range(10000):
+        for row in range(max_trainSet_rows):
+            for elem in range(elems_of_img):
                 matr[row][elem] = data[elem]
     return matr

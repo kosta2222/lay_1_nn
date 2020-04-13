@@ -1,6 +1,16 @@
 from operations_func import operations
-from nn_constants import  INIT_W_HE, RELU,RELU_DERIV, INIT_W_HABR, INIT_W_MY, SIGMOID, SIGMOID_DERIV
+from read_x_y import make_train_matr
+from nn_constants import  INIT_W_HE, RELU,RELU_DERIV, \
+    INIT_W_HABR, INIT_W_MY, SIGMOID, SIGMOID_DERIV, max_trainSet_rows, elems_of_img
+import numpy as np
+def init_wei(w,h)->np.ndarray:
+    matr = np.zeros((h, w))
+    for row in range(h):
+        for elem in range(w):
+            matr[row][elem] = operations(INIT_W_MY, 0, 0, 0, 0, "");
+    return matr
 def main():
+    wei = init_wei(elems_of_img, max_trainSet_rows)
     data=[[0,0],[1,0],[0,1],[1,1]]
     # answer=[0, 1, 1, 1]  #  OR
     answer=[0, 0, 0, 1]  # AND
