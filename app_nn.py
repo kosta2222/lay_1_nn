@@ -2,7 +2,7 @@ from operations_func import operations
 from read_x_y import make_train_matr
 from nn_constants import  INIT_W_HE, RELU,RELU_DERIV, \
     INIT_W_HABR, INIT_W_MY, SIGMOID, SIGMOID_DERIV, max_trainSet_rows, elems_of_img,\
-    INIT_W_GLOROT_V1, INIT_W_UNIFORM
+    INIT_W_GLOROT_V1, INIT_W_UNIFORM, TAN, TAN_DERIV
 import math
 
 
@@ -61,10 +61,10 @@ def main():
             n2_dot = w2[0] +\
                      n1[0] * w2[1] \
                      + n1[1] * w2[2]
-            n2 = operations(SIGMOID, n2_dot, sigmoid_koef, 0, 0, "")
+            n2 = operations(TAN, n2_dot, sigmoid_koef, 0, 0, "")
             # Получаю ошибку выходного нейрона
             Z = n2 - answer[choose]
-            E = (answer[choose] - n2) * operations(SIGMOID_DERIV, n2_dot, sigmoid_koef, 0, 0, "");
+            E = (answer[choose] - n2) * operations(TAN_DERIV, n2_dot, sigmoid_koef, 0, 0, "");
             if count == 0:
                 Z_t_minus_1 = Z
                 A_t_minus_1 = A
@@ -102,7 +102,7 @@ def main():
                 пропускаю через функцию активации которая является сигмоидом * /
                 """
                 n2_dot = w2[0] + n1[0] * w2[1] + n1[1] * w2[2] ;
-                n2 = operations(SIGMOID, n2_dot, sigmoid_koef, 0, 0, "");
+                n2 = operations(TAN, n2_dot, sigmoid_koef, 0, 0, "");
                 print("input vector [ %f %f ] " % (n1[0], n1[1]));
                 if (n2 > 0.5):
                     n2 = 1
@@ -148,7 +148,7 @@ def main():
         пропускаю через функцию активации которая является сигмоидом * /
         """
         n2_dot = w2[0] + n1[0] * w2[1] + n1[1] * w2[2] ;
-        n2 = operations(SIGMOID, n2_dot, sigmoid_koef, 0, 0, "");
+        n2 = operations(TAN, n2_dot, sigmoid_koef, 0, 0, "");
         print("input vector [ %f %f ] " % (n1[0], n1[1]));
         if (n2 > 0.5):
             n2 = 1
