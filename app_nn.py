@@ -1,7 +1,11 @@
 from operations_func import operations
 from read_x_y import make_train_matr
 from nn_constants import  INIT_W_HE, RELU,RELU_DERIV, \
-    INIT_W_HABR, INIT_W_MY, SIGMOID, SIGMOID_DERIV, max_trainSet_rows, elems_of_img
+    INIT_W_HABR, INIT_W_MY, SIGMOID, SIGMOID_DERIV, max_trainSet_rows, elems_of_img,\
+    INIT_W_GLOROT_V1, INIT_W_UNIFORM
+import math
+
+
 def main():
     data=[[0,0],[1,0],[0,1],[1,1]]
     # answer=[0, 1, 1, 1]  #  OR
@@ -34,12 +38,15 @@ def main():
     A_t_minus_1=0
     acc=0
     sigmoid_koef=0.42
-    accuracy_shureness = 75
+    accuracy_shureness = 100
     with_adap_lr = True
-
-    w2[0] = operations(INIT_W_HE, 2, 0, 0, 0, ""); # биас
-    w2[1] = operations(INIT_W_HE, 2, 0, 0, 0, "");
-    w2[2] = operations(INIT_W_MY, 2, 0, 0, 0, "");
+    b=math.sqrt(6) / math.sqrt(3 + 1)
+    a=-(math.sqrt(6) / math.sqrt(3 + 1))
+    w2[0] = operations(INIT_W_GLOROT_V1,3 ,1 , 0, 0, ""); # биас
+    w2[1] = operations(INIT_W_GLOROT_V1 ,3 , 1, 0, 0, "");
+    w2[2] = operations(INIT_W_GLOROT_V1,3 ,1 , 0, 0, "");
+    print("w2[1]",w2[1])
+    print("w2[2]",w2[2])
 
     while (1) :
         print("epocha %d\n" % count);
@@ -51,7 +58,9 @@ def main():
             Умножаю значения нейронов 1 слоя с соответствующими весами и
             пропускаю через функцию активации которая является сигмоидом 
             """
-            n2_dot = w2[0] + n1[0] * w2[1] + n1[1] * w2[2]
+            n2_dot = w2[0] +\
+                     n1[0] * w2[1] \
+                     + n1[1] * w2[2]
             n2 = operations(SIGMOID, n2_dot, sigmoid_koef, 0, 0, "")
             # Получаю ошибку выходного нейрона
             Z = n2 - answer[choose]
